@@ -4,9 +4,6 @@ import streams.Gender
 import streams.Grade
 import streams.GradeType
 import streams.Student
-import java.util.*
-import java.util.function.Consumer
-import kotlin.collections.ArrayList
 
 
 fun atLeastOneGradeA(student: Student): Boolean {
@@ -17,9 +14,7 @@ fun atLeastOneGradeA(student: Student): Boolean {
 
 
 fun getStudentAges(students: List<Student>): List<Int> {
-    val ages = ArrayList<Int>()
-    students.forEach(Consumer { student: Student -> ages.add(student.age) })
-    return ages
+    return students.map { student -> student.age }
 }
 
 fun getStudentsWithMinimumAge(students: List<Student>, minAge: Int): List<Student> {
@@ -40,24 +35,18 @@ fun avgAgeOfFemaleStudent(students: List<Student>): Double {
     val femaleStudents = students.filter { student -> student.gender == Gender.FEMALE }
     val ages = femaleStudents.map { femaleStudent -> femaleStudent.age }
     val sum = ages.fold(0) { acc, i -> acc + i }
-    return (sum / ages.size).toDouble()
+    return (sum.toDouble() / ages.size.toDouble())
 }
 
 fun getProductOfStudentAges(students: List<Student>): Int {
-    val ages = ArrayList<Int>()
-    students.forEach { student -> ages.add(student.age) }
-    var product = 1
-    ages.forEach { age -> product *= age }
-    return product
+    return students.map { student -> student.age }.fold(1) { acc, i -> acc * i }
 }
 
 // ignore F Grades
 fun productOfStudentGrades(student: Student): Int {
-    val grades = ArrayList<Int>()
-    student.grades.forEach { grade -> grades.add(grade.type.value) }
-    var product = 1
-    grades.forEach { grade -> product *= grade }
-    return product
+    val studentGrades = student.grades.filter { grade -> grade.type.value != 0 }
+    val grades = studentGrades.map { grade -> grade.type.value }
+    return grades.fold(1) {acc, i -> acc * i }
 }
 
 // region BONUS
@@ -68,7 +57,7 @@ fun getBestMathGradeFromStudent(student: Student): Grade? {
 }
 
 fun getSortedAges(students: List<Student>): List<Int> {
-    TODO()
+    return students.map { student -> student.age }.asSequence().sorted().toList()
 }
 
 // endregion
