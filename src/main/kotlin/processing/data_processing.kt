@@ -23,25 +23,35 @@ fun getStudentsWithMinimumAge(students: List<Student>, minAge: Int): List<Studen
 // gender == Gender.MALE
 // or gender.name == "MALE"
 fun countMaleStudents(students: List<Student>): Int {
-    return students.filter { student -> student.gender == Gender.MALE }.size
+    return students
+        .filter { student -> student.gender == Gender.MALE }
+        .size
 }
 
 
 // gender == Gender.FEMALE
 // or gender.name == "FEMALE"
 fun avgAgeOfFemaleStudent(students: List<Student>): Double {
-    val ages = students.filter { student -> student.gender == Gender.FEMALE }.map { femaleStudent -> femaleStudent.age }
-    return (ages.fold(0) { acc, i -> acc + i }.toDouble() / ages.size.toDouble())
+    val ages = students
+        .filter { student -> student.gender == Gender.FEMALE }
+        .map { femaleStudent -> femaleStudent.age }
+    return (ages
+        .fold(0) { acc, i -> acc + i }
+        .toDouble() / ages.size.toDouble())
 }
 
 fun getProductOfStudentAges(students: List<Student>): Int {
-    return students.map { student -> student.age }.fold(1) { acc, i -> acc * i }
+    return students
+        .map { student -> student.age }
+        .fold(1) { acc, i -> acc * i }
 }
 
 // ignore F Grades
 fun productOfStudentGrades(student: Student): Int {
-    val grades = student.grades.filter { grade -> grade.type.value != 0 }.map { grade -> grade.type.value }
-    return grades.fold(1) {acc, i -> acc * i }
+    return student.grades
+        .filter { grade -> grade.type.value != 0 }
+        .map { grade -> grade.type.value }
+        .fold(1) {acc, i -> acc * i }
 }
 
 // region BONUS
@@ -52,7 +62,11 @@ fun getBestMathGradeFromStudent(student: Student): Grade? {
 }
 
 fun getSortedAges(students: List<Student>): List<Int> {
-    return students.map { student -> student.age }.asSequence().sorted().toList()
+    return students
+        .map { student -> student.age }
+        .asSequence()
+        .sorted()
+        .toList()
 }
 
 // endregion
