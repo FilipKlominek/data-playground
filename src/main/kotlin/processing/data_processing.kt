@@ -7,9 +7,7 @@ import streams.Student
 
 
 fun atLeastOneGradeA(student: Student): Boolean {
-    val grades = student.grades
-    val gradeAs = grades.filter { grade -> grade.type == GradeType.A }
-    return gradeAs.isNotEmpty()
+    return student.grades.any { grade -> grade.type == GradeType.A }
 }
 
 
@@ -32,10 +30,8 @@ fun countMaleStudents(students: List<Student>): Int {
 // gender == Gender.FEMALE
 // or gender.name == "FEMALE"
 fun avgAgeOfFemaleStudent(students: List<Student>): Double {
-    val femaleStudents = students.filter { student -> student.gender == Gender.FEMALE }
-    val ages = femaleStudents.map { femaleStudent -> femaleStudent.age }
-    val sum = ages.fold(0) { acc, i -> acc + i }
-    return (sum.toDouble() / ages.size.toDouble())
+    val ages = students.filter { student -> student.gender == Gender.FEMALE }.map { femaleStudent -> femaleStudent.age }
+    return (ages.fold(0) { acc, i -> acc + i }.toDouble() / ages.size.toDouble())
 }
 
 fun getProductOfStudentAges(students: List<Student>): Int {
@@ -44,8 +40,7 @@ fun getProductOfStudentAges(students: List<Student>): Int {
 
 // ignore F Grades
 fun productOfStudentGrades(student: Student): Int {
-    val studentGrades = student.grades.filter { grade -> grade.type.value != 0 }
-    val grades = studentGrades.map { grade -> grade.type.value }
+    val grades = student.grades.filter { grade -> grade.type.value != 0 }.map { grade -> grade.type.value }
     return grades.fold(1) {acc, i -> acc * i }
 }
 
